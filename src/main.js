@@ -16,6 +16,15 @@ if (require('electron-squirrel-startup')) {
   let loginWindow;
 
   const createWindowDashboard = () => {
+    
+    const sql = 'SELECT * FROM `board` WHERE `idUserBoar` =?';
+  
+    db.query(sql, [store.get('id')], (error, results, fields) => {
+      if (error) {
+        console.log(error);
+      }
+
+    });
     // Create the browser window.
     window = new electronBrowserWindow({
       icon: __dirname + '/assets/img/icono.ico',
@@ -59,11 +68,32 @@ if (require('electron-squirrel-startup')) {
   // ####################################  ELEMENTOS DE COMUNICACIONES  
   
   electronIpcMain.on('login', (event, data) => {
-    //Comprobar el login
+    const { email, password } = data;
+    const sql = 'SELECT * FROM `users` WHERE `emailUser` =? AND `passwordUser`=?';
+  
+    db.query(sql, [email, password], (error, results, fields) => {
+      if (error) {
+        console.log(error);
+      }
+  
+      if (results.length > 0) {
+        store.set('id', results[0].idUser);
+        store.set('user', results[0].nameUser);
+        store.set('email', results[0].emailUser);
+        store.set('token', results[0].tokenUser);
+        store.set('image', '');
+        createWindowDashboard();
+        window.loadFile(path.join(__dirname, 'views/dashboard.html'));
+        window.maximize();
+        window.show();
+        loginWindow.close();
+      }
+    });
   });
 
 
-  electronApp.on('ready', createLogin);
+  //electronApp.on('ready', createLogin);
+  electronApp.on('ready', createWindowDashboard);
 
   electronApp.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
