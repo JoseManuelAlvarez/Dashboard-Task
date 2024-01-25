@@ -6,13 +6,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function consultarTablero(id) {
     console.log('Consultar el tablero: '+id);
+    const data = { id: id};
+    window.ipcRender.send('getBoard', data).then((result) => {
+        console.log(result)
+    });
 }
-
+function mostrarConfiguraciones() {
+    console.log('Desplegar las configuraciones');
+    
+}
+function ocultarMenu() {
+    console.log('Esta funcionando')
+    if($('#menuLateral').hasClass('showMenu')){
+        $('#menuLateral').addClass('hideMenu');
+        $('#contenidoPrincipal').addClass('hideContent');
+        $('#menuLateral').removeClass('showMenu');
+        $('#contenidoPrincipal').removeClass('showContent');
+    }else{
+        $('#menuLateral').addClass('showMenu');
+        $('#contenidoPrincipal').addClass('showContent');
+        $('#menuLateral').removeClass('hideMenu');
+        $('#contenidoPrincipal').removeClass('hideContent');
+    }
+}
 function mostrarTableros(boards) {
-    let TablaLibros = document.getElementById('menuLateral');
+    let TablaLibros = document.getElementById('contenidoTableros');
     let texto = '<li class="nav-item nav-category">Inicio</li>';
     TablaLibros.innerHTML = '';
-
     for (let i = 0; i < boards.length; i++) {
         texto += ` <li class="nav-item">
         <a  class="nav-link" onclick="consultarTablero(${boards[i].idBoar})">

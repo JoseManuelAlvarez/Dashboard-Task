@@ -1,39 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="../assets/css/normalize.css">
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/sweetalert2.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css">
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/sweetalert2.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <script src="../assets/js/jquery.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../assets/js/popper.min.js"></script>
+
+
 </head>
+
 <body>
-    <div class="main-wrapper">
-        <nav class="sidebar">
-            <div class="sidebar-header">
-              <a href="#" class="sidebar-brand"> Biblioteca </a>
-              <div class="sidebar-toggler not-active">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
+  <div class="flexconten">
+    <div id="menuLateral" class="menuLateral showMenu">
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Inicio<sup>2</sup></div>
+      </a>
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+      <!-- Nav Item - Dashboard -->
+      <!--
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+        </li>
+      -->
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+      <div id="contenidoTableros">
+
+      </div>
+      <div class="contenidoFooter">
+        <li class="nav-item">
+          <a class="nav-link" onclick="mostrarConfiguraciones()" data-toggle="modal" data-target=".bd-example-modal-lg">
+            <i class="link-icon" data-feather="search"></i>
+            <span class="link-title">Configuraciones</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="cerrarSession()" >
+            <i class="link-icon" data-feather="search"></i>
+            <span class="link-title">Cerrar session</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="ocultarMenu()" >
+            <i class="link-icon" data-feather="search"></i>
+            <span class="link-title">Ocultar Menu << </span>
+          </a>
+        </li>
+
+
+      </div>
+      <!-- Nav Item - Pages Collapse Menu -->
+      <!--
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Components</span>
+          </a>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Custom Components:</h6>
+              <a class="collapse-item" href="buttons.html">Buttons</a>
+              <a class="collapse-item" href="cards.html">Cards</a>
             </div>
-            <div class="sidebar-body">
-              <ul class="nav" id="menuLateral">
-                <li class="nav-item nav-category">Inicio</li>
-                <li class="nav-item">
-                  <a href="index.html" class="nav-link">
-                    <i class="link-icon" data-feather="search"></i>
-                    <span class="link-title">Localizar libros</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          </div>
+        </li>
+      -->
+
+
+
+
+
     </div>
+    <div id="contenidoPrincipal" class="contenidoPrincipal showContent">
+
+      
+    </div>
+  </div>
+
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Configuraciones</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="correo">Correo Electronico</label>
+            <input type="email" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="Ingresa el correo">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+
+
+
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Guardar changes</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+<!--
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Configuraciones</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Guardar changes</button>
+        </div>
+        
+      </div>
+    </div>
+     -->
+
+
     <script src="../assets/js/board.js"></script>
-    <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/sweetalert2.min.js"></script>
 </body>
+
 </html>

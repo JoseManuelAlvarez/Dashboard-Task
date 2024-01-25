@@ -1,0 +1,66 @@
+:root {
+    --color-fondo: #E5EAF0;
+    --color-fondo-oscuro: #1B3A57;
+    --color-naranja: #F57C00;
+    --color-letras-menu: #fff;
+}
+body{
+    background: var(--color-fondo);
+}
+.flexconten{
+    display: flex;
+}
+.menuLateral {
+    /*
+    width: 20%;
+    position: relative;
+    */
+    background: var(--color-fondo-oscuro);
+    color: var(--color-letras-menu);
+    height: 100vh;
+    list-style: none;
+    
+}
+.contenidoPrincipal {
+    /*width: 80%;*/
+    background: var(--color-fondo);
+    height: 100vh;
+}
+.sidebar-divider{
+    margin: 0 1rem 1rem;
+}
+.nav-item {
+    position: relative
+}
+.nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+}
+.nav-link:hover, .nav-link:focus {
+    text-decoration: none;
+}
+.nav-link.disabled {
+    color: #858796;
+    pointer-events: none;
+    cursor: default;
+}
+.nav-tabs {
+    border-bottom: 1px solid #dddfeb;
+}
+.contenidoFooter {
+    bottom: 5px;
+    position: fixed;
+}
+.showMenu {
+    width: 20%;
+}
+.hideMenu {
+    width: 5%;
+}
+.showContent {
+    width: 80%;
+}
+.hideContent {
+    width: 95%;
+}
+

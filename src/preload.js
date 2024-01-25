@@ -6,10 +6,11 @@ const ipc = {
         'send': [
             'login',
             'logout',
+            'getBoard'
         ],
         'sendReceive': [
             'getUserData',
-            'getDasboard'
+            'getDasboard',
         ]
     }
 };

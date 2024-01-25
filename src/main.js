@@ -20,7 +20,7 @@ if (require('electron-squirrel-startup')) {
     window = new electronBrowserWindow({
       icon: __dirname + '/assets/img/icono.ico',
       width: 900,
-      height: 600,
+      height: 625,
       autoHideMenuBar: true,
       webPreferences: {
         nodeIntegration: true,
@@ -74,6 +74,31 @@ if (require('electron-squirrel-startup')) {
         window.show();
         loginWindow.close();
       }
+    });
+  });
+
+  electronIpcMain.on('getBoard', (event, data) => {
+    const { id } = data;
+    console.log('Antes de la consulta ah base de datos: '+id)
+    const sql = 'SELECT * FROM `column` WHERE `idBoarColu` =? ORDER BY `sortColu` ASC';
+    db.query(sql, [id], (error, results, fields) => {
+      if (error) {
+        console.log(error);
+      }
+      let idColums = '';
+      let titles = '';
+      if (results.length > 0) {
+        console.log(results);
+        for (Column of results) {
+          idColums += Column.algo + '_';
+          titles += Column.algo + '_';
+        }
+      }
+      store.set('idColumn', idColums);
+      store.set('titulo', titles);
+      const data = { idColumn: store.get('idColumn'), titulo: store.get('titulo')};
+      return data;
+
     });
   });
 
