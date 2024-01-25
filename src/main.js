@@ -16,15 +16,6 @@ if (require('electron-squirrel-startup')) {
   let loginWindow;
 
   const createWindowDashboard = () => {
-    
-    const sql = 'SELECT * FROM `board` WHERE `idUserBoar` =?';
-  
-    db.query(sql, [store.get('id')], (error, results, fields) => {
-      if (error) {
-        console.log(error);
-      }
-
-    });
     // Create the browser window.
     window = new electronBrowserWindow({
       icon: __dirname + '/assets/img/icono.ico',
@@ -34,7 +25,7 @@ if (require('electron-squirrel-startup')) {
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: true,
-        devTools: false,
+        devTools: true,
         preload: path.join(__dirname, 'preload.js')
       }
     });
@@ -59,23 +50,18 @@ if (require('electron-squirrel-startup')) {
         preload: path.join(__dirname, 'preload.js')
       }
     });
-  
     // and load the login.html of the app.
     loginWindow.loadFile(path.join(__dirname, 'views/login.html'));
   };
 
-
   // ####################################  ELEMENTOS DE COMUNICACIONES  
-  
   electronIpcMain.on('login', (event, data) => {
     const { email, password } = data;
     const sql = 'SELECT * FROM `users` WHERE `emailUser` =? AND `passwordUser`=?';
-  
     db.query(sql, [email, password], (error, results, fields) => {
       if (error) {
         console.log(error);
       }
-  
       if (results.length > 0) {
         store.set('id', results[0].idUser);
         store.set('user', results[0].nameUser);
@@ -89,6 +75,46 @@ if (require('electron-squirrel-startup')) {
         loginWindow.close();
       }
     });
+  });
+
+  electronIpcMain.handle('getDasboard', (event) => {
+    const sql = 'SELECT * FROM `board` WHERE `idUserBoar` =?';
+//    db.query(sql, [store.get('id')], (error, results, fields) => {
+  db.query(sql, 1, (error, results, fields) => {
+      if (error) {
+        console.log(error);
+      }
+      console.log('Se encontro informacion')
+      console.log(results)
+      let 
+      idBoar = '', 
+      idUserBoar = '', 
+      titleBoar = '', 
+      descriptionBoar = '', 
+      backgroundColoBoar = '', 
+      createdAtBoar = '', 
+      updatedAtBoar = '';
+      if(results.length > 0) {
+        for (board of results) {
+
+          idBoar += board.idBoar+'_';
+          idUserBoar += board.idUserBoar+'_';
+          titleBoar += board.titleBoar+'_';
+          /*descriptionBoar += board.descriptionBoar+'_';
+          backgroundColoBoar += board.backgroundColoBoar+'_';
+          createdAtBoar += board.createdAtBoar+'_';
+          updatedAtBoar += board.updatedAtBoar+'_';
+          */
+        }
+      }
+      console.log(idBoar)
+      console.log(titleBoar)
+      store.set('idBoar', idBoar);
+      store.set('idUserBoar', idUserBoar);
+      store.set('titleBoar', titleBoar);
+    });
+    const data = { idBoar: store.get('idBoar'), idUserBoar: store.get('idUserBoar'), titleBoar: store.get('titleBoar')};
+    return data;
   });
 
 

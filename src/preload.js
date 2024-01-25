@@ -9,6 +9,7 @@ const ipc = {
         ],
         'sendReceive': [
             'getUserData',
+            'getDasboard'
         ]
     }
 };
